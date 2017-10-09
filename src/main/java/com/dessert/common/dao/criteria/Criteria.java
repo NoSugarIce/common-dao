@@ -15,10 +15,6 @@ public class Criteria {
         criterions = new ArrayList<>();
     }
 
-    public void setOrderByClause(String orderByClause) {
-        this.orderByClause = orderByClause;
-    }
-
     public String getOrderByClause() {
         return orderByClause;
     }
