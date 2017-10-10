@@ -36,12 +36,14 @@ public class Criteria {
     }
 
 
-    public void ORDER_BY_ASC(String column) {
+    public Criteria ORDER_BY_ASC(String column) {
         this.orderByClause = column + " ASC";
+        return this;
     }
 
-    public void ORDER_BY_DESC(String column) {
+    public Criteria ORDER_BY_DESC(String column) {
         this.orderByClause = column + " DESC";
+        return this;
     }
 
 
