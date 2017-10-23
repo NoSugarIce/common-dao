@@ -3,7 +3,6 @@ package com.dessert.common.dao.mapper;
 
 import com.dessert.common.dao.bean.Page;
 import net.sf.cglib.beans.BeanMap;
-import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -102,7 +101,7 @@ public interface BaseSelectDefaultMapper<T> extends BaseSelectMapper<T> {
      */
     default <K> Map<K, T> selectMap(T parameter, String mapKey) {
         final List<T> list = selectList(parameter);
-        if (CollectionUtils.isEmpty(list)) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
         Map<K, T> map = new HashMap<>();
