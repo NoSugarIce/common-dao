@@ -3,6 +3,7 @@ package com.dessert.common.dao.mapper;
 
 import com.dessert.common.dao.bean.Page;
 import net.sf.cglib.beans.BeanMap;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -89,6 +90,31 @@ public interface BaseSelectDefaultMapper<T> extends BaseSelectMapper<T> {
     default int selectCount(T parameter) {
         Map<String, Object> params = beanToMap(parameter);
         return selectCountPrmMap(params);
+    }
+
+
+    /**
+     * 查询Map 以mapKey为键,一条返回数据为值
+     *
+     * @param parameter
+     * @param mapKey
+     * @return
+     */
+    default <K> Map<K, T> selectMap(T parameter, String mapKey) {
+        final List<T> list = selectList(parameter);
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        Map<K, T> map = new HashMap<>();
+        for (T t : list) {
+            if (t != null) {
+                BeanMap beanMap = BeanMap.create(t);
+                if (beanMap.containsKey(mapKey)) {
+                    map.put((K) beanMap.get(mapKey), t);
+                }
+            }
+        }
+        return map;
     }
 
 

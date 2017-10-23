@@ -1,5 +1,7 @@
 package com.dessert.common.dao.service;
 
+import com.dessert.common.dao.bean.Page;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,8 @@ import java.util.List;
  * @date 2017/8/31
  */
 public interface BaseService<T> {
+
+    Page<T> selectPage(Page<T> page, T parameter);
 
     List<T> selectList(T parameter);
 

@@ -1,5 +1,6 @@
 package com.dessert.common.dao.service.impl;
 
+import com.dessert.common.dao.bean.Page;
 import com.dessert.common.dao.mapper.BaseMapper;
 import com.dessert.common.dao.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired
     public BaseMapper<T> mapper;
+
+    @Override
+    public Page<T> selectPage(Page<T> page, T parameter) {
+        return mapper.selectPage(page, parameter);
+    }
 
     @Override
     public List<T> selectList(T parameter) {

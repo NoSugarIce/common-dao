@@ -23,4 +23,6 @@ public interface BaseSelectMapper<T> {
 
     int selectCountPrmMap(Map<String, Object> parameter);
 
+    boolean isExist(T parameter);
+
 }
