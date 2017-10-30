@@ -1,5 +1,7 @@
 package com.dessert.common.dao.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.Map;
 
 /**
@@ -12,7 +14,8 @@ public interface BaseUpdateMapper<T> {
 
     int updateByPrimaryKeyPrmMap(Map<String, Object> parameter);
 
-    int update(T parameter);
+    int updateByChoseKeyPrmMap(@Param("updateColum") Map<String, Object> parameter, @Param("selectColum") Map<String, Object> selectParameter);
 
-    int updatePrmMap(Map<String, Object> parameter);
+    int insertOrUpdateByPrimaryKey(T parameter);
+
 }

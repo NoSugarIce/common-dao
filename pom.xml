@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-beans.version>4.3.10.RELEASE</spring-beans.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
-        <mybatis.version>3.4.4</mybatis.version>
+        <mybatis.version>3.4.5</mybatis.version>
         <cglib.version>3.2.5</cglib.version>
     </properties>
 
@@ -23,6 +23,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>${spring-beans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
@@ -45,7 +50,6 @@
             </plugin>
         </plugins>
     </build>
-
 
 
 </project>

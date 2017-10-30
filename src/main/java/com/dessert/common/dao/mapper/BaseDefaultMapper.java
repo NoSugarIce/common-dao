@@ -5,18 +5,69 @@ import com.dessert.common.dao.bean.Page;
 import net.sf.cglib.beans.BeanMap;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author frostding@gmail.com(dingjingyang)
  * @date 2017/8/30
  */
-public interface BaseSelectDefaultMapper<T> extends BaseSelectMapper<T> {
+public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMapper<T>, BaseUpdateMapper<T> {
 
     int PAGER_SIZE = 10;
+
+
+    /**
+     * 根据选择的字段更新
+     *
+     * @param parameter
+     * @param choseKey
+     * @return
+     */
+    default int updateByChoseKey(T parameter, String... choseKey) {
+        if (parameter == null || choseKey == null || Array.getLength(choseKey) == 0) {
+            throw new IllegalArgumentException("参数不能为空!");
+        }
+        Map<String, Object> beanMap = beanToMap(parameter);
+        Map<String, Object> selectParameter = new HashMap<>();
+        for (String key : choseKey) {
+            if (beanMap.containsKey(key)) {
+                selectParameter.put(key, beanMap.get(key));
+                beanMap.put(key, null);
+            }
+        }
+        return updateByChoseKeyPrmMap(beanMap, selectParameter);
+    }
+
+
+    /**
+     * 根据选择的字段判断插入或更新
+     *
+     * @param parameter
+     * @param choseKey
+     * @return
+     */
+    default int insertOrUpdateByChoseKey(T parameter, String... choseKey) {
+        if (parameter == null || choseKey == null || Array.getLength(choseKey) == 0) {
+            throw new IllegalArgumentException("参数不能为空!");
+        }
+        Map<String, Object> beanMap = beanToMap(parameter);
+        Map<String, Object> selectParameter = new HashMap<>();
+        for (String key : choseKey) {
+            if (beanMap.containsKey(key)) {
+                selectParameter.put(key, beanMap.get(key));
+                beanMap.put(key, null);
+            }
+        }
+        int count = selectCountPrmMap(selectParameter);
+        if (count > 1) {
+            throw new RuntimeException("请检查参数信息,该参数匹配到多条数据!");
+        } else if (count == 1) {
+            return updateByChoseKeyPrmMap(beanMap, selectParameter);
+        } else {
+            return insert(parameter);
+        }
+    }
+
 
     /**
      * 判断是否存在
@@ -26,6 +77,17 @@ public interface BaseSelectDefaultMapper<T> extends BaseSelectMapper<T> {
      */
     default boolean isExist(T parameter) {
         return selectCount(parameter) > 0;
+    }
+
+    /**
+     * 查询符合条件的个数
+     *
+     * @param parameter
+     * @return
+     */
+    default int selectCount(T parameter) {
+        Map<String, Object> params = beanToMap(parameter);
+        return selectCountPrmMap(params);
     }
 
 
@@ -81,18 +143,6 @@ public interface BaseSelectDefaultMapper<T> extends BaseSelectMapper<T> {
 
 
     /**
-     * 查询符合条件的个数
-     *
-     * @param parameter
-     * @return
-     */
-    default int selectCount(T parameter) {
-        Map<String, Object> params = beanToMap(parameter);
-        return selectCountPrmMap(params);
-    }
-
-
-    /**
      * 查询Map 以mapKey为键,一条返回数据为值
      *
      * @param parameter
@@ -144,6 +194,14 @@ public interface BaseSelectDefaultMapper<T> extends BaseSelectMapper<T> {
     }
 
 
+    /**
+     * 分页查询
+     *
+     * @param count
+     * @param page
+     * @param parameter
+     * @return
+     */
     default Page<T> selectPage(int count, Page<T> page, Map<String, Object> parameter) {
         if (count > 0) {
             processingParams(count, page, parameter);
