@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author frostding@gmail.com(ding)
+ * @author dingjingyang@foxmail.com(ding)
  * @date 2017/10/1
  */
 public class MapperBeanFactory {

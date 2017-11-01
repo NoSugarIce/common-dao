@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @author frostding@gmail.com(ding)
+ * @author dingjingyang@foxmail.com(ding)
  * @date 2017/9/30
  */
 public class BeanProxy<T> implements Serializable {

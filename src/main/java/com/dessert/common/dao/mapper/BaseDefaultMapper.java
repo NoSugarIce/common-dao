@@ -8,7 +8,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /**
- * @author frostding@gmail.com(dingjingyang)
+ * @author dingjingyang@foxmail.com(dingjingyang)
  * @date 2017/8/30
  */
 public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMapper<T>, BaseUpdateMapper<T> {

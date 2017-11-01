@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author frostding@gmail.com(dingjingyang)
+ * @author dingjingyang@foxmail.com(dingjingyang)
  * @date 2017/8/29
  */
 public interface BaseSelectMapper<T> {

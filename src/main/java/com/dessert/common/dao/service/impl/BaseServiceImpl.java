@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
- * @author frostding@gmail.com(dingjingyang)
+ * @author dingjingyang@foxmail.com(dingjingyang)
  * @date 2017/8/31
  */
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
