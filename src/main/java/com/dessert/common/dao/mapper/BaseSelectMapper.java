@@ -1,5 +1,6 @@
 package com.dessert.common.dao.mapper;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import java.util.Map;
  * @date 2017/8/29
  */
 public interface BaseSelectMapper<T> {
+
+    T selectByPrimaryKey(Serializable... vals);
 
     T selectOne(T parameter);
 
@@ -22,7 +25,5 @@ public interface BaseSelectMapper<T> {
     List<Map<String, Object>> selectMapList(Map<String, Object> parameter);
 
     int selectCountPrmMap(Map<String, Object> parameter);
-
-    int selectCountByByPrimaryKey(T parameter);
 
 }
