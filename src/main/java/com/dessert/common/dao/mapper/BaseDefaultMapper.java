@@ -152,7 +152,7 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
      * @param mapKey
      * @return
      */
-    default <K> Map<K, T> selectMap(T parameter, String mapKey) {
+    default <K> Map<K, T> selectConversionMap(T parameter, String mapKey) {
         final List<T> list = selectList(parameter);
         if (list == null || list.isEmpty()) {
             return null;
