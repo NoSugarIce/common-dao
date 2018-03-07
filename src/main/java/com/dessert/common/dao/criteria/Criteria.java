@@ -1,13 +1,20 @@
 package com.dessert.common.dao.criteria;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * @author dingjingyang
+ */
 public class Criteria {
 
     private String orderByClause;
 
     private boolean distinct;
+
+    private Map<String, Boolean> excludeColumns;
 
     private List<Criterion> criterions;
 
@@ -27,6 +34,10 @@ public class Criteria {
         return distinct;
     }
 
+    public boolean isExcludeColumn() {
+        return excludeColumns != null && excludeColumns.size() > 0;
+    }
+
     public boolean isValid() {
         return criterions.size() > 0;
     }
@@ -35,6 +46,19 @@ public class Criteria {
         return criterions;
     }
 
+    public Map<String, Boolean> getExcludeColumns() {
+        return excludeColumns;
+    }
+
+    public Criteria EXCLUDE_COLUMN(String... column) {
+        if (excludeColumns == null) {
+            excludeColumns = new HashMap<>(column.length);
+        }
+        for (String aColumn : column) {
+            excludeColumns.put(aColumn, true);
+        }
+        return this;
+    }
 
     public Criteria ORDER_BY_ASC(String column) {
         this.orderByClause = column + " ASC";
@@ -45,7 +69,6 @@ public class Criteria {
         this.orderByClause = column + " DESC";
         return this;
     }
-
 
     private void addCriterion(String column, String condition) {
         if (condition == null) {

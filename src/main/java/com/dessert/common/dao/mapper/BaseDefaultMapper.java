@@ -4,11 +4,9 @@ package com.dessert.common.dao.mapper;
 import com.dessert.common.dao.bean.Page;
 import net.sf.cglib.beans.BeanMap;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author dingjingyang@foxmail.com(dingjingyang)
@@ -80,6 +78,16 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
      */
     default boolean isExist(T parameter) {
         return selectCount(parameter) > 0;
+    }
+
+    /**
+     * 根据主键判断是否存在
+     *
+     * @param vals
+     * @return
+     */
+    default boolean isExistByPrimaryKey(Serializable... vals) {
+        return Objects.nonNull(selectByPrimaryKey(vals));
     }
 
     /**
