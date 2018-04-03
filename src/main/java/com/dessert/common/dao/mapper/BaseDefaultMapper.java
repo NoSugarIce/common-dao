@@ -214,7 +214,7 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
      * @return
      */
     default Page<T> selectPage(int count, Page<T> page, Map<String, Object> parameter) {
-        if (count > 0) {
+        if (count > 0 && (page.getCurrentPage() - 1) * page.getPageSize() < count) {
             processingParams(count, page, parameter);
             List<T> list = selectListPrmMap(parameter);
             page.setPageList(list);
