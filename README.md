@@ -12,6 +12,7 @@ https://github.com/frostding/mybatis-util
 ```
 #### 方法清单
 公共的mapper有
+
 查询:
 - `T selectByPrimaryKey(Serializable... vals)`
 - `T selectOne(T parameter);`
