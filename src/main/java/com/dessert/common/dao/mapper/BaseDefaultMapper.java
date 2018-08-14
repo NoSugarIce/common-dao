@@ -20,9 +20,9 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 根据选择的字段更新
      *
-     * @param parameter
-     * @param choseKey
-     * @return
+     * @param parameter 参数
+     * @param choseKey  指定的keys
+     * @return 更新的数量
      */
     default int updateByChoseKey(T parameter, String... choseKey) {
         if (parameter == null || choseKey == null || Array.getLength(choseKey) == 0) {
@@ -43,9 +43,9 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 根据选择的字段判断插入或更新
      *
-     * @param parameter
-     * @param choseKey
-     * @return
+     * @param parameter 参数
+     * @param choseKey  指定的keys
+     * @return 插入或更新的数量
      */
     default int insertOrUpdateByChoseKey(T parameter, String... choseKey) {
         if (parameter == null || choseKey == null || Array.getLength(choseKey) == 0) {
@@ -73,8 +73,8 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 判断是否存在
      *
-     * @param parameter
-     * @return true
+     * @param parameter 参数
+     * @return true:存在,false:不存在
      */
     default boolean isExist(T parameter) {
         return selectCount(parameter) > 0;
@@ -83,8 +83,8 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 根据主键判断是否存在
      *
-     * @param vals
-     * @return
+     * @param vals 主键
+     * @return true:存在,false:不存在
      */
     default boolean isExistByPrimaryKey(Serializable... vals) {
         return Objects.nonNull(selectByPrimaryKey(vals));
@@ -93,8 +93,8 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 查询符合条件的个数
      *
-     * @param parameter
-     * @return
+     * @param parameter 参数
+     * @return 数量
      */
     default int selectCount(T parameter) {
         Map<String, Object> params = beanToMap(parameter);
@@ -105,9 +105,9 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 同一键多个值返回数据
      *
-     * @param key
-     * @param vals
-     * @return
+     * @param key  选择的字段
+     * @param vals 值
+     * @return 符合条件的集合
      */
     default List<T> selectMoreCondList(String key, Object... vals) {
         if (key == null || key.length() == 0 || vals == null || Array.getLength(vals) == 0) {
@@ -126,40 +126,40 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 获取第一条记录
      *
-     * @param parameter
-     * @return
+     * @param parameter 参数
+     * @return 一条记录
      */
-    default T selectOneFist(T parameter) {
-        List<T> list = selectList(parameter);
+    default T selectFist(T parameter) {
+        List<T> list = selectListByQuantity(parameter, 1);
         if (list != null && !list.isEmpty()) {
             return list.get(0);
         }
         return null;
     }
 
-
     /**
-     * 获取最后一条记录
+     * 获取指定数量条记录
      *
-     * @param parameter
-     * @return
+     * @param parameter 参数
+     * @param quantity  指定数量
+     * @return 指定数量条记录
      */
-    default T selectOneLast(T parameter) {
-        List<T> list = selectList(parameter);
-        if (list != null && !list.isEmpty()) {
-            return list.get(list.size() - 1);
-        }
-        return null;
+    default List<T> selectListByQuantity(T parameter, int quantity) {
+        Page<T> page = new Page<>();
+        page.setPageSize(quantity);
+        page = selectPage(page, parameter);
+        return page.getPageList();
     }
 
 
     /**
      * 查询Map 以mapKey为键,一条返回数据为值
      *
-     * @param parameter
-     * @param mapKey
-     * @return
+     * @param parameter 参数
+     * @param mapKey    记录的一个字段
+     * @return 以mapKey为键, 一条返回数据为值
      */
+    @SuppressWarnings("unchecked")
     default <K> Map<K, T> selectConversionMap(T parameter, String mapKey) {
         final List<T> list = selectList(parameter);
         if (list == null || list.isEmpty()) {
@@ -181,8 +181,8 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 分页查询
      *
-     * @param page
-     * @param parameter
+     * @param page      分页参数
+     * @param parameter 参数
      * @return
      */
     default Page<T> selectPage(Page<T> page, T parameter) {
@@ -195,8 +195,8 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 分页查询
      *
-     * @param page
-     * @param parameter
+     * @param page      分页参数
+     * @param parameter 参数
      * @return
      */
     default Page<T> selectPage(Page<T> page, Map<String, Object> parameter) {
@@ -208,9 +208,9 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 分页查询
      *
-     * @param count
-     * @param page
-     * @param parameter
+     * @param count     总记录数
+     * @param page      分页参数
+     * @param parameter 分页参数
      * @return
      */
     default Page<T> selectPage(int count, Page<T> page, Map<String, Object> parameter) {
@@ -226,8 +226,8 @@ public interface BaseDefaultMapper<T> extends BaseSelectMapper<T>, BaseInsertMap
     /**
      * 分页查询
      *
-     * @param page
-     * @param parameter
+     * @param page      分页参数
+     * @param parameter 分页参数
      * @return
      */
     default Page<Map<String, Object>> selectPageMap(Page<Map<String, Object>> page, Map<String, Object> parameter) {
