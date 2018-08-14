@@ -10,7 +10,7 @@ https://github.com/frostding/mybatis-util
     <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
-####方法清单
+#### 方法清单
 公共的mapper有
 查询:
 - `T selectByPrimaryKey(Serializable... vals)`
@@ -32,10 +32,12 @@ https://github.com/frostding/mybatis-util
 - `Page<T> selectPage(Page<T> page, Map<String, Object> parameter);`
 - `Page<T> selectPage(int count, Page<T> page, Map<String, Object> parameter);`
 - `age<Map<String, Object>> selectPageMap(Page<Map<String, Object>> page, Map<String, Object> parameter);`
+
 新增:
 - `int insert(T var1);`
 - `int insertPrmMap(Map<String, Object> var1);`
 - `int insertBatch(List<T> var1);`
+
 修改:
 - `int updateByPrimaryKey(T parameter);`
 - `int updateByPrimaryKeyPrmMap(Map<String, Object> parameter);`
@@ -43,6 +45,7 @@ https://github.com/frostding/mybatis-util
 - `int updatePrmMap(Map<String, Object> parameter);`
 - `int updateByChoseKey(T parameter, String... choseKey);`
 - `int insertOrUpdateByChoseKey(T parameter, String... choseKey)`
+
 删除:
 - `int deleteByPrimaryKey(T parameter);`
 - `int deleteByPrimaryKeyPrmMap(Map<String, Object> parameter);`
